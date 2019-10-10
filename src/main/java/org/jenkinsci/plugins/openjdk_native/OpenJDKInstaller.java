@@ -63,11 +63,10 @@ public class OpenJDKInstaller extends ToolInstaller{
     private void switchAlternatives(Node node, TaskListener log){
         log.getLogger().println("Switching to " +openjdkPackage.getPackageName() + " using alternatives ... " );
         Launcher l = node.createLauncher(log);
-        try{
+        try (OpenJDKConsoleAnnotator annotator = new OpenJDKConsoleAnnotator(log.getLogger())) {
             PrintStream output = log.getLogger();
             int exitStatus  = l.launch().cmds("sudo", "alternatives", "--set", "java", OPENJDK_HOME_PREFIX + openjdkPackage.getJreName() + OPENJDK_HOME_BIN).stdout(output).join();
             if(exitStatus != 0){
-                OpenJDKConsoleAnnotator annotator = new OpenJDKConsoleAnnotator(log.getLogger());
                 byte[] errMsg = ("[OpenJDK ERROR] Switching OpenJDK via atlernatives to " + openjdkPackage.getPackageName() + " failed! " + OPENJDK_BIN + " may not exists or point to different java version!\n").getBytes(Charset.defaultCharset());
                 annotator.eol(errMsg,errMsg.length);
             }
@@ -102,11 +101,10 @@ public class OpenJDKInstaller extends ToolInstaller{
     private void installViaYum(Node node, TaskListener log){
         log.getLogger().print(openjdkPackage.getPackageName() + " not installed, trying to install via yum ..." );
         Launcher l = node.createLauncher(log);
-        try{
+        try (OpenJDKConsoleAnnotator annotator = new OpenJDKConsoleAnnotator(log.getLogger())) {
             PrintStream output = log.getLogger();
             int exitStatus  = l.launch().cmds("sudo", "yum", "-y", "install", openjdkPackage.getPackageName()).stdout(output).join();
             if(exitStatus != 0){
-                OpenJDKConsoleAnnotator annotator = new OpenJDKConsoleAnnotator(log.getLogger());
                 byte[] errMsg = ("[OpenJDK ERROR] Installation of " + openjdkPackage.getPackageName() + " failed!").getBytes(Charset.defaultCharset());
                 annotator.eol(errMsg,errMsg.length);
             }
