@@ -11,7 +11,7 @@
   <artifactId>openJDK-native-plugin</artifactId>
   <version>1.5-SNAPSHOT</version>
   <packaging>hpi</packaging>
-  <url>https://wiki.jenkins-ci.org/display/JENKINS/OpenJDK+native+intaller+plugin</url>
+  <url>https://github.com/jenkinsci/openJDK-native-plugin</url>
 
   <properties>
     <java.level>8</java.level>
