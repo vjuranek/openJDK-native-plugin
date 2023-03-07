@@ -147,6 +147,7 @@ public class OpenJDKInstaller extends ToolInstaller{
     }
     
     public enum OpenJDKPackage {
+        openJDK17("openJDK17","java-17-openjdk"),
         openJDK13("openJDK13","java-13-openjdk"),
         openJDK11("openJDK11","java-11-openjdk"),
         openJDK8("openJDK8","java-1.8.0-openjdk"),
