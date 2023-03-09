@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
- * Auto-installer of native OpenJDK packages for RedHat-like distors
+ * Auto-installer of native OpenJDK packages for RedHat-like distros
  * Switch to required OpenJDK version via Linux alternatives. If required OpenJDK is not installed, try to install it via yum.
  * 
  * Alternatives and yum are run via sudo, therefore appropriate sudoers setup is requited (including switching off tty requirement). 
@@ -70,7 +70,7 @@ public class OpenJDKInstaller extends ToolInstaller{
         Launcher l = node.createLauncher(log);
         try (OpenJDKConsoleAnnotator annotator = new OpenJDKConsoleAnnotator(log.getLogger())) {
             PrintStream output = log.getLogger();
-            int exitStatus  = l.launch().cmds("sudo", "alternatives", "--set", "java", OPENJDK_HOME_PREFIX + openjdkPackage.getJreName() + OPENJDK_HOME_BIN).stdout(output).join();
+            int exitStatus  = l.launch().cmds("sudo", "alternatives", "--set", "java", OPENJDK_HOME_PREFIX + "$(rpm -q " + openjdkPackage.getPackageName() +" )"+ OPENJDK_HOME_BIN).stdout(output).join();
             if(exitStatus != 0){
                 byte[] errMsg = ("[OpenJDK ERROR] Switching OpenJDK via alternatives to " + openjdkPackage.getPackageName() + " failed! " + OPENJDK_BIN + " may not exists or point to different java version!\n").getBytes(Charset.defaultCharset());
                 annotator.eol(errMsg,errMsg.length);
