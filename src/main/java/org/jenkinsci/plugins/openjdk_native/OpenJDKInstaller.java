@@ -72,7 +72,7 @@ public class OpenJDKInstaller extends ToolInstaller{
             PrintStream output = log.getLogger();
             int exitStatus  = l.launch().cmds("sudo", "alternatives", "--set", "java", OPENJDK_HOME_PREFIX + openjdkPackage.getJreName() + OPENJDK_HOME_BIN).stdout(output).join();
             if(exitStatus != 0){
-                byte[] errMsg = ("[OpenJDK ERROR] Switching OpenJDK via atlernatives to " + openjdkPackage.getPackageName() + " failed! " + OPENJDK_BIN + " may not exists or point to different java version!\n").getBytes(Charset.defaultCharset());
+                byte[] errMsg = ("[OpenJDK ERROR] Switching OpenJDK via alternatives to " + openjdkPackage.getPackageName() + " failed! " + OPENJDK_BIN + " may not exists or point to different java version!\n").getBytes(Charset.defaultCharset());
                 annotator.eol(errMsg,errMsg.length);
             }
         } catch (IOException e){
